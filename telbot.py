@@ -1,5 +1,5 @@
-import sys
-sys.path.append('/home/meshgan/Work/Crypto/gitForBot/my_env/lib/python3.5/site-packages/')
+# import sys
+# sys.path.append('/home/meshgan/Work/Crypto/gitForBot/my_env/lib/python3.5/site-packages/')
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 updater = Updater(token='598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA') # Токен API к Telegram
 dispatcher = updater.dispatcher
@@ -10,6 +10,7 @@ def textMessage(bot, update):
     response = 'Получил Ваше сообщение: ' + update.message.text
     bot.send_message(chat_id=update.message.chat_id, text=response)
 # Хендлеры
+print("aaa")
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
 # Добавляем хендлеры в диспетчер
