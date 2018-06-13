@@ -42,6 +42,7 @@ def main():
 
     while True:
         print("Hello")
+        greet_bot.send_message(1, 'Доброе утро')
         # greet_bot.get_updates(new_offset)
         #
         # last_update = greet_bot.get_last_update()
