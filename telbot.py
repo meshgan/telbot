@@ -41,6 +41,7 @@ def main():
     hour = now.hour
 
     while True:
+        print("Hello")
         greet_bot.get_updates(new_offset)
 
         last_update = greet_bot.get_last_update()
