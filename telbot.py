@@ -1,5 +1,6 @@
 import requests
 import datetime
+import time
 
 class BotHandler:
 
@@ -19,6 +20,7 @@ class BotHandler:
         params = {'chat_id': chat_id, 'text': text}
         method = 'sendMessage'
         resp = requests.post(self.api_url + method, params)
+        print(self.api_url + method)
         return resp
 
     def get_last_update(self):
@@ -31,7 +33,7 @@ class BotHandler:
 
         return last_update
 
-greet_bot = BotHandler("598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA")
+greet_bot = BotHandler('598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA')
 greetings = ('здравствуй', 'привет', 'ку', 'здорово')
 now = datetime.datetime.now()
 
@@ -41,10 +43,11 @@ def main():
     hour = now.hour
 
     while True:
+        time.sleep(1)
         print("Hello")
-        greet_bot.send_message(1, 'Доброе утро')
-        # greet_bot.get_updates(new_offset)
-        #
+        greet_bot.send_message(1, 'Доброе утро, {}')
+
+
         # last_update = greet_bot.get_last_update()
         #
         # last_update_id = last_update['update_id']
