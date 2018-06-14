@@ -1,22 +1,41 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
-updater = Updater(token='598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA') # Токен API к Telegram
-dispatcher = updater.dispatcher
-# Обработка команд
-def startCommand(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
-def textMessage(bot, update):
-    response = 'Получил Ваше сообщение: ' + update.message.text
-    bot.send_message(chat_id=update.message.chat_id, text=response)
-# Хендлеры
-start_command_handler = CommandHandler('start', startCommand)
-text_message_handler = MessageHandler(Filters.text, textMessage)
-# Добавляем хендлеры в диспетчер
-dispatcher.add_handler(start_command_handler)
-dispatcher.add_handler(text_message_handler)
-# Начинаем поиск обновлений
-updater.start_polling(clean=True)
-# Останавливаем бота, если были нажаты Ctrl + C
-updater.idle()
+#!/usr/bin/env python
+# coding: utf-8
+from __future__ import unicode_literals
+import json
+
+from twx.botapi import TelegramBot, ReplyKeyboardMarkup
+from flask import Flask, request
+app = Flask(__name__)
+
+bot = TelegramBot('bot98184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA')
+@app.route("/telegram/", methods=['POST'])
+def hello():
+    message = json.loads(request.data)
+    if message['message']['text'] == '/ping':
+        bot.send_message(message['message']['chat']['id'], 'Pong!').wait()
+    return 'ok'
+
+# from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+# from os import environ
+# updater = Updater(token='598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA') # Токен API к Telegram
+# dispatcher = updater.dispatcher
+# # Обработка команд
+# def startCommand(bot, update):
+#     bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
+# def textMessage(bot, update):
+#     response = 'Получил Ваше сообщение: ' + update.message.text
+#     bot.send_message(chat_id=update.message.chat_id, text=response)
+# # Хендлеры
+# app.listen(environ["PORT"])
+# start_command_handler = CommandHandler('start', startCommand)
+# text_message_handler = MessageHandler(Filters.text, textMessage)
+# # Добавляем хендлеры в диспетчер
+# dispatcher.add_handler(start_command_handler)
+# dispatcher.add_handler(text_message_handler)
+# # Начинаем поиск обновлений
+# updater.start_polling(clean=True)
+# # Останавливаем бота, если были нажаты Ctrl + C
+# updater.idle()
 
 # import requests
 # import datetime
