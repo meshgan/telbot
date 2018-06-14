@@ -9,6 +9,7 @@ def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
 def textMessage(bot, update):
     response = 'Получил Ваше сообщение: ' + update.message.text
+    print(update.message.text)
     bot.send_message(chat_id=update.message.chat_id, text=response)
     print(update.message.chat_id)
     # bot.send_message(chat_id=my_chat_id, text=response)
