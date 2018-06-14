@@ -6,9 +6,9 @@ updater = Updater(TOKEN) # Токен API к Telegram
 dispatcher = updater.dispatcher
 # Обработка команд
 def startCommand(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
+    bot.send_message(chat_id=update.message.chat_id, text='Мой адрес 0x19999222992929 шли 0.5 сюда?')
 def textMessage(bot, update):
-    response = 'Получил Ваше сообщение: ' + update.message.text
+    response = 'Ты тупой?: шли 0.5 сюда' + update.message.text
     print(update.message.text)
     bot.send_message(chat_id=update.message.chat_id, text=response)
     print(update.message.chat_id)
