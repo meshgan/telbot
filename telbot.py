@@ -9,7 +9,6 @@ def textMessage(bot, update):
     response = 'Получил Ваше сообщение: ' + update.message.text
     bot.send_message(chat_id=update.message.chat_id, text=response)
 # Хендлеры
-app.listen(environ["PORT"])
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
 # Добавляем хендлеры в диспетчер
