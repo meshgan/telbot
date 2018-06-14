@@ -1,7 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from os import environ
 TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
-#chat_id =
+my_chat_id = '@wmesh_channel'
 updater = Updater(TOKEN) # Токен API к Telegram
 dispatcher = updater.dispatcher
 # Обработка команд
@@ -9,8 +9,8 @@ def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
 def textMessage(bot, update):
     response = 'Получил Ваше сообщение: ' + update.message.text
-    bot.send_message(chat_id=update.message.chat_id, text=response)
-    print(update.message.chat_id)
+    #bot.send_message(chat_id=update.message.chat_id, text=response)
+    bot.send_message(chat_id=my_chat_id, text=response)
 # Хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
