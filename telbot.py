@@ -9,8 +9,8 @@ def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Привет, давай пообщаемся?')
 def textMessage(bot, update):
     response = 'Получил Ваше сообщение: ' + update.message.text
-    #bot.send_message(chat_id=update.message.chat_id, text=response)
-    bot.send_message(chat_id=my_chat_id, text=response)
+    bot.send_message(chat_id=update.message.chat_id, text=response)
+    # bot.send_message(chat_id=my_chat_id, text=response)
 # Хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
