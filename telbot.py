@@ -1,7 +1,7 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from os import environ
 TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
-chat_id =
+#chat_id =
 updater = Updater(TOKEN) # Токен API к Telegram
 dispatcher = updater.dispatcher
 # Обработка команд
