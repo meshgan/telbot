@@ -13,7 +13,7 @@ def textMessage(bot, update):
     global counter
     if (counter == 0):
         if "&" and "." in answer:
-            response = "1."
+            response = "Please send us your ERC20 wallet."
             counter += 1
         else:
             response = "There is  a mistake. Please send us your email."
