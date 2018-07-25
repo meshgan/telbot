@@ -4,15 +4,26 @@ TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
 my_chat_id = '@mesh_channel'
 updater = Updater(TOKEN)
 dispatcher = updater.dispatcher
+counter=0
 # Обработка команд
 def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Hello! Please send us your email.')
 def textMessage(bot, update):
     answer = update.message.text
-    if "&" and "." in answer:
-        response = 'Please send us your ERC20 wallet '
+    if counter == 0:
+        if "&" and "." in answer:
+            response = 'Please send us your ERC20 wallet.'
+            counter = counter+1
     else:
         response = "There is  a mistake. Please send us your email."
+
+    if counter == 1:
+        if "0x" in answer:
+            response = 'Please send us your passport photo '
+            counter = counter + 1
+        else:
+            response = "There is  a mistake. Please send us your ERC20 wallet."
+
     bot.send_message(chat_id=update.message.chat_id, text=response)
 # Хендлеры
 start_command_handler = CommandHandler('start', startCommand)
