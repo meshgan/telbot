@@ -14,9 +14,11 @@ def textMessage(bot, update):
         if "&" and "." in answer:
             response = 'Please send us your ERC20 wallet.'
             counter = counter+1
+        else:
+            response = "There is  a mistake. Please send us your email."
     else:
-        response = "There is  a mistake. Please send us your email."
-
+        response = "Error."
+        
     if counter == 1:
         if "0x" in answer:
             response = 'Please send us your passport photo '
