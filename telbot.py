@@ -11,14 +11,12 @@ def startCommand(bot, update):
 def textMessage(bot, update):
     answer = update.message.text
     global counter
-    if (counter == 0):
+    if counter == 0:
         if "&" and "." in answer:
             response = "Please send us your ERC20 wallet."
             counter += 1
         else:
-            response = "There is  a mistake. Please send us your email."
-    else:
-        response = "Error."
+            response = "There is a mistake. Please send us your email."
 
     if counter == 1:
         if "0x" in answer:
