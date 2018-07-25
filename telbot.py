@@ -1,18 +1,19 @@
 from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
 from os import environ
 TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
-my_chat_id = '@wmesh_channel'
-updater = Updater(TOKEN) # Токен API к Telegram
+my_chat_id = '@mesh_channel'
+updater = Updater(TOKEN)
 dispatcher = updater.dispatcher
 # Обработка команд
 def startCommand(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text='Привет')
+    bot.send_message(chat_id=update.message.chat_id, text='Hello! Please send us your email.')
 def textMessage(bot, update):
-    response = 'Привет' + update.message.text
-    print(update.message.text)
+    answer = update.message.text
+    if "&" and "." in answer:
+        response = 'Please send us your ERC20 wallet '
+    else:
+        response = "There is  a mistake. Please send us your email."
     bot.send_message(chat_id=update.message.chat_id, text=response)
-    print(update.message.chat_id)
-    # bot.send_message(chat_id=my_chat_id, text=response)
 # Хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
