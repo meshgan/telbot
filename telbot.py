@@ -11,21 +11,20 @@ def startCommand(bot, update):
 def textMessage(bot, update):
     answer = update.message.text
     global counter
-    response = "counter = " + counter
-    bot.send_message(chat_id=update.message.chat_id, text=response)
     if counter == 0:
         if "&" and "." in answer:
-            response = "Please send us your ERC20 wallet." + counter
+            response = "Please send us your ERC20 wallet."
             counter += 1
         else:
             response = "There is a mistake. Please send us your email."
 
-    if counter == 1:
-        if "0x" in answer:
-            response = 'Please send us your passport photo '
-            counter = counter + 1
-        else:
-            response = "There is a mistake. Please send us your ERC20 wallet." + counter
+    else:
+        if counter == 1:
+            if "0x" in answer:
+                response = 'Please send us your passport photo '
+                counter = counter + 1
+            else:
+                response = "There is a mistake. Please send us your ERC20 wallet."
 
     bot.send_message(chat_id=update.message.chat_id, text=response)
 # Хендлеры
