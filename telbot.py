@@ -4,8 +4,7 @@ TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
 my_chat_id = '@mesh_channel'
 updater = Updater(TOKEN)
 dispatcher = updater.dispatcher
-#counter = int(0)  # type: int
-
+folderPath = '/home/meshgan/Загрузки/'
 MAIL, WALLET, PHOTO = range(3)
 
 # Обработка команд
@@ -34,9 +33,13 @@ def walletMessage(bot, update):
         return WALLET
 
 def photoMessage(bot, update):
-#    user = update.message.from_user
-#    photo_file = bot.get_file(update.message.photo[-1].file_id)
-#    photo_file.download('user_photo.jpg')
+    try:
+        photo_file = bot.get_file(update.message.photo[-1].file_id)
+        path = '{1}telega/{0}.jpg'.format(update.message.photo[-1].file_id, folderPath)
+        photo_file.download(path)
+    except UnicodeEncodeError:
+        bot.send_message(chat_id=update.message.chat_id, text=path)
+
     bot.send_message(chat_id=update.message.chat_id, text="Thank you have a nice day")
 
 def cancel(bot, update):
