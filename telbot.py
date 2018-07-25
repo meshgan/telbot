@@ -16,18 +16,33 @@ def startCommand(bot, update):
 def mailMessage(bot, update):
     if "&" and "." in update.message.text:
         response = "Please send us your ERC20 wallet."
+        bot.send_message(chat_id=update.message.chat_id, text=response)
         return WALLET
     else:
         response = "There is a mistake. Please send us your email."
+        bot.send_message(chat_id=update.message.chat_id, text=response)
         return MAIL
 
 def walletMessage(bot, update):
     if "&" and "." in update.message.text:
         response = "Please send us your passport photo."
+        bot.send_message(chat_id=update.message.chat_id, text=response)
         return PHOTO
     else:
         response = "There is a mistake. Please send us your ERC20 wallet."
+        bot.send_message(chat_id=update.message.chat_id, text=response)
         return WALLET
+
+def photoMessage(bot, update):
+    user = update.message.from_user
+    photo_file = bot.get_file(update.message.photo[-1].file_id)
+    photo_file.download('user_photo.jpg')
+    bot.send_message(chat_id=update.message.chat_id, text="Thank you")
+
+def cancel(bot, update):
+    user = update.message.from_user
+    update.message.reply_text('Bye! I hope we can talk again some day.')
+    return ConversationHandler.END
 
 
 
@@ -54,16 +69,6 @@ def walletMessage(bot, update):
 #
 #     bot.send_message(chat_id=update.message.chat_id, text=response)
 
-def photoMessage(bot, update):
-    user = update.message.from_user
-    photo_file = bot.get_file(update.message.photo[-1].file_id)
-    photo_file.download('user_photo.jpg')
-    bot.send_message(chat_id=update.message.chat_id, text="Thank you")
-
-def cancel(bot, update):
-    user = update.message.from_user
-    update.message.reply_text('Bye! I hope we can talk again some day.')
-    return ConversationHandler.END
 
 # Хендлеры
 #start_command_handler = CommandHandler('start', startCommand)
@@ -96,6 +101,6 @@ updater.start_webhook(listen="0.0.0.0",
                     port=PORT,
                     url_path=TOKEN)
 updater.bot.setWebhook("https://obscure-wildwood-96925.herokuapp.com/" + TOKEN)
-#updater.start_polling(clean=True)
+updater.start_polling()
 # Останавливаем бота, если были нажаты Ctrl + C
 updater.idle()
