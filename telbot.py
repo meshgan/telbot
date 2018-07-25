@@ -8,6 +8,7 @@ counter = int(0)  # type: int
 # Обработка команд
 def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Hello! Please send us your email.')
+
 def textMessage(bot, update):
     answer = update.message.text
     global counter
@@ -18,21 +19,32 @@ def textMessage(bot, update):
         else:
             response = "There is a mistake. Please send us your email."
 
-    else:
-        if counter == 1:
-            if "0x" in answer:
-                response = 'Please send us your passport photo '
-                counter = counter + 1
-            else:
-                response = "There is a mistake. Please send us your ERC20 wallet."
+    elif counter == 1:
+        if "0x" in answer:
+            response = 'Please send us your passport photo '
+            counter = counter + 1
+        else:
+            response = "There is a mistake. Please send us your ERC20 wallet."
+
+    # elif counter == 2:
 
     bot.send_message(chat_id=update.message.chat_id, text=response)
+
+def photoMessage(bot, update):
+    user = update.message.from_user
+    photo_file = bot.get_file(update.message.photo[-1].file_id)
+    photo_file.download('user_photo.jpg')
+    bot.send_message(chat_id=update.message.chat_id, text="Thank you")
+
 # Хендлеры
 start_command_handler = CommandHandler('start', startCommand)
 text_message_handler = MessageHandler(Filters.text, textMessage)
+photo_message_handler = MessageHandler(Filters.photo, photoMessage)
 # Добавляем хендлеры в диспетчер
 dispatcher.add_handler(start_command_handler)
 dispatcher.add_handler(text_message_handler)
+dispatcher.add_handler(photo_message_handler)
+
 # Начинаем поиск обновлений
 PORT = int(environ.get('PORT', '5000'))
 updater.start_webhook(listen="0.0.0.0",
