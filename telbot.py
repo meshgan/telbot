@@ -33,12 +33,12 @@ def walletMessage(bot, update):
         return WALLET
 
 def photoMessage(bot, update):
-    try:
-        photo_file = bot.get_file(update.message.photo[-1].file_id)
-        path = '{1}telega/{0}.jpg'.format(update.message.photo[-1].file_id, folderPath)
-        photo_file.download(path)
-    except UnicodeEncodeError:
-        bot.send_message(chat_id=update.message.chat_id, text=path)
+    # try:
+    #     photo_file = bot.get_file(update.message.photo[-1].file_id)
+    #     path = '{1}telega/{0}.jpg'.format(update.message.photo[-1].file_id, folderPath)
+    #     photo_file.download(path)
+    # except UnicodeEncodeError:
+    #     bot.send_message(chat_id=update.message.chat_id, text=path)
 
     bot.send_message(chat_id=update.message.chat_id, text="Thank you have a nice day")
 
