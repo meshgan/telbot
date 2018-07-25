@@ -24,7 +24,7 @@ def mailMessage(bot, update):
         return MAIL
 
 def walletMessage(bot, update):
-    if "&" and "." in update.message.text:
+    if "0x" in update.message.text:
         response = "Please send us your passport photo."
         bot.send_message(chat_id=update.message.chat_id, text=response)
         return PHOTO
