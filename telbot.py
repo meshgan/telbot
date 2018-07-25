@@ -14,10 +14,15 @@ def startCommand(bot, update):
     return MAIL
 
 def mailMessage(bot, update):
-    if "&"  in update.message.text and "." in update.message.text:
-        response = "Please send us your ERC20 wallet."
-        bot.send_message(chat_id=update.message.chat_id, text=response)
-        return WALLET
+    if "&" in update.message.text:
+        if "." in update.message.text:
+            response = "Please send us your ERC20 wallet."
+            bot.send_message(chat_id=update.message.chat_id, text=response)
+            return WALLET
+        else:
+            response = "There is a mistake. Please send us your email."
+            bot.send_message(chat_id=update.message.chat_id, text=response)
+            return MAIL
     else:
         response = "There is a mistake. Please send us your email."
         bot.send_message(chat_id=update.message.chat_id, text=response)
