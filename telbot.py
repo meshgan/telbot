@@ -14,7 +14,7 @@ def startCommand(bot, update):
     return MAIL
 
 def mailMessage(bot, update):
-    if "&" and "." in update.message.text:
+    if "&"  in update.message.text and "." in update.message.text:
         response = "Please send us your ERC20 wallet."
         bot.send_message(chat_id=update.message.chat_id, text=response)
         return WALLET
@@ -34,11 +34,10 @@ def walletMessage(bot, update):
         return WALLET
 
 def photoMessage(bot, update):
-    bot.send_message(chat_id=update.message.chat_id, text="in photoMessage")
-    user = update.message.from_user
-    photo_file = bot.get_file(update.message.photo[-1].file_id)
-    photo_file.download('user_photo.jpg')
-    bot.send_message(chat_id=update.message.chat_id, text="Thank you")
+#    user = update.message.from_user
+#    photo_file = bot.get_file(update.message.photo[-1].file_id)
+#    photo_file.download('user_photo.jpg')
+    bot.send_message(chat_id=update.message.chat_id, text="Thank you have a nice day")
 
 def cancel(bot, update):
     user = update.message.from_user
