@@ -1,34 +1,58 @@
-from telegram.ext import Updater, CommandHandler, MessageHandler, Filters
+from telegram.ext import Updater, CommandHandler, MessageHandler, Filters, ConversationHandler
 from os import environ
 TOKEN = '598184545:AAESpk_Ji0JgG_zQsw3g1cvtkTf7k-5vbdA'
 my_chat_id = '@mesh_channel'
 updater = Updater(TOKEN)
 dispatcher = updater.dispatcher
-counter = int(0)  # type: int
+#counter = int(0)  # type: int
+
+MAIL, WALLET, PHOTO = range(3)
+
 # Обработка команд
 def startCommand(bot, update):
     bot.send_message(chat_id=update.message.chat_id, text='Hello! Please send us your email.')
+    return MAIL
 
-def textMessage(bot, update):
-    answer = update.message.text
-    global counter
-    if counter == 0:
-        if "&" and "." in answer:
-            response = "Please send us your ERC20 wallet."
-            counter += 1
-        else:
-            response = "There is a mistake. Please send us your email."
+def mailMessage(bot, update):
+    if "&" and "." in update.message.text:
+        response = "Please send us your ERC20 wallet."
+        return WALLET
+    else:
+        response = "There is a mistake. Please send us your email."
+        return MAIL
 
-    elif counter == 1:
-        if "0x" in answer:
-            response = 'Please send us your passport photo '
-            counter = counter + 1
-        else:
-            response = "There is a mistake. Please send us your ERC20 wallet."
+def walletMessage(bot, update):
+    if "&" and "." in update.message.text:
+        response = "Please send us your passport photo."
+        return PHOTO
+    else:
+        response = "There is a mistake. Please send us your ERC20 wallet."
+        return WALLET
 
-    # elif counter == 2:
 
-    bot.send_message(chat_id=update.message.chat_id, text=response)
+
+# def textMessage(bot, update):
+#     answer = update.message.text
+#     global counter
+#     if counter == 0:
+#         if "&" and "." in answer:
+#             response = "Please send us your ERC20 wallet."
+#             counter += 1
+#         else:
+#             response = "There is a mistake. Please send us your email."
+#
+#         return WALLET
+#
+#     elif counter == 1:
+#         if "0x" in answer:
+#             response = 'Please send us your passport photo '
+#             counter = counter + 1
+#         else:
+#             response = "There is a mistake. Please send us your ERC20 wallet."
+#
+#         return PHOTO
+#
+#     bot.send_message(chat_id=update.message.chat_id, text=response)
 
 def photoMessage(bot, update):
     user = update.message.from_user
@@ -36,14 +60,35 @@ def photoMessage(bot, update):
     photo_file.download('user_photo.jpg')
     bot.send_message(chat_id=update.message.chat_id, text="Thank you")
 
+def cancel(bot, update):
+    user = update.message.from_user
+    update.message.reply_text('Bye! I hope we can talk again some day.')
+    return ConversationHandler.END
+
 # Хендлеры
-start_command_handler = CommandHandler('start', startCommand)
-text_message_handler = MessageHandler(Filters.text, textMessage)
-photo_message_handler = MessageHandler(Filters.photo, photoMessage)
+#start_command_handler = CommandHandler('start', startCommand)
+#text_message_handler = MessageHandler(Filters.text, textMessage)
+#photo_message_handler = MessageHandler(Filters.photo, photoMessage)
+
 # Добавляем хендлеры в диспетчер
-dispatcher.add_handler(start_command_handler)
-dispatcher.add_handler(text_message_handler)
-dispatcher.add_handler(photo_message_handler)
+conv_handler = ConversationHandler(
+        entry_points=[CommandHandler('start', startCommand)],
+
+        states={
+            MAIL: [MessageHandler(Filters.text, mailMessage)],
+            WALLET: [MessageHandler(Filters.text, walletMessage)],
+            PHOTO: [MessageHandler(Filters.photo, photoMessage)],
+        },
+
+         fallbacks=[CommandHandler('cancel', cancel)]
+    )
+
+dispatcher.add_handler(conv_handler)
+
+# dispatcher.add_handler(start_command_handler)
+# dispatcher.add_handler(text_message_handler)
+# dispatcher.add_handler(photo_message_handler)
+
 
 # Начинаем поиск обновлений
 PORT = int(environ.get('PORT', '5000'))
